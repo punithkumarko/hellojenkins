@@ -37,7 +37,7 @@ pipeline {
       // this stage is triggered only for feature branches (feature*),
       // which will build the stack and deploy to a stack named with branch name.
       when {
-        branch 'feature*'
+        branch 'main*'
       }
       agent {
         docker {
@@ -46,7 +46,7 @@ pipeline {
         }
       }
       steps {
-        sh 'sam build --template ${SAM_TEMPLATE} --use-container'
+        sh 'sam build --template ${SAM_TEMPLATE}'
         withAWS(
             credentials: env.PIPELINE_USER_CREDENTIAL_ID,
             region: env.TESTING_REGION,
@@ -75,7 +75,7 @@ pipeline {
         }
       }
       steps {
-        sh 'sam build --template ${SAM_TEMPLATE} --use-container'
+        sh 'sam build --template ${SAM_TEMPLATE}'
         withAWS(
             credentials: env.PIPELINE_USER_CREDENTIAL_ID,
             region: env.TESTING_REGION,
